@@ -1,0 +1,21 @@
+<h3>
+    Bench
+    <span class="input-group">
+        <input type="text" id="player" class="form-control" onkeydown="bench(event)" />
+        <span class="input-group-btn">
+            <input type="button" id="bench" class="btn btn-primary" value="Add to bench" onclick="addToTable('bench-table', $('#player')[0].value, 0, 0)" />
+        </span>
+    </span>
+</h3>
+<table class="table table-striped table-bordered table-hover table-condensed sortable">
+    <thead>
+        <tr>
+            <th class="sorttable_nosort"></th>
+            <th>Player</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th class="sorttable_nosort"></th>
+        </tr>
+    </thead>
+    <tbody id="bench-table"></tbody>
+</table>

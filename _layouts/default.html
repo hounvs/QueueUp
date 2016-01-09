@@ -1,13 +1,27 @@
 {% include header.html %}
 
 <div class="page-content">
-    <div class="wrapper">
-        <h1>{{ page.title }}</h1>
-
-        {{ content }}
-
-        {% include nav.html %}
+    <div>
+        <!-- Title and Player Buttons -->
+        <div style="height: 7em;">
+            {% include currentPlayers.html %}
+        </div>
+        <div class="col-md-12">
+            {% include importExport.html %}
+        </div>
+        <div class="col-md-6">
+            {% include queueTable.html %}
+        </div>
+        <div class="col-md-6">
+            {% include benchTable.html %}
+        </div>
     </div>
 </div>
+
+<script>
+    playerTable = $("#player-table")[0];
+    benchTable = $("#bench-table")[0];
+	updatePage();
+</script>
 
 {% include footer.html %}
