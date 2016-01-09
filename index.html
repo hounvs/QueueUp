@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="./js/jquery-2.1.4.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/sorttable.js"></script>
+    <script src="./js/site.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./css/site.css" />
+    <title></title>
+</head>
+<body>
+    <!-- Title and Player Buttons -->
+    <div style="height: 7em;">
+        <p id="current-players" style="text-align: center;"></p>
+        <p id="skip-players" style="text-align: center;"></p>
+    </div>
+    <div class="col-md-12">
+        <!-- Import/Export -->
+        <div class="input-group">
+            <span class="input-group-btn">
+                <input id="exportButton" type="button" class="btn btn-primary" value="Export Stats" onclick="exportStats()" />
+            </span>
+            <textarea id="data-dump" rows="1" class="form-control"></textarea>
+            <span class="input-group-btn">
+                <input id="importButton" type="button" class="btn btn-primary" value="Import Stats" onclick="importStats('bench-table')" />
+            </span>
+        </div>
+        <a href="./Stats/stats.csv">Download stats.csv (Manual update required for now)</a>
+    </div>
+
+    <div class="col-md-6">
+        <h3>
+            Queue
+            <span class="input-group">
+                <span class="input-group-addon">Players this match</span>
+                <input type="number" id="players-in-match" class="form-control" value="2" min="2" onchange="updatePage()" />
+            </span>
+        </h3>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th class="sorttable_nosort"></th>
+                    <th>Player</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Streak</th>
+                </tr>
+            </thead>
+            <tbody id="player-table"></tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h3>
+            Bench
+            <span class="input-group">
+                <input type="text" id="player" class="form-control" onkeydown="bench(event)" />
+                <span class="input-group-btn">
+                    <input type="button" id="bench" class="btn btn-primary" value="Add to bench" onclick="addToTable('bench-table', $('#player')[0].value, 0, 0)" />
+                </span>
+            </span>
+        </h3>
+        <table class="table table-striped table-bordered table-hover table-condensed sortable">
+            <thead>
+                <tr>
+                    <th class="sorttable_nosort"></th>
+                    <th>Player</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th class="sorttable_nosort"></th>
+                </tr>
+            </thead>
+            <tbody id="bench-table"></tbody>
+        </table>
+    </div>
+    <div class="tools">
+        <a href="mailto:VinceHounshell@gmail.com">Contact Site Owner</a>
+    </div>
+    <script>
+        playerTable = $("#player-table")[0];
+        benchTable = $("#bench-table")[0];
+		updatePage();
+    </script>
+</body>
+</html>
