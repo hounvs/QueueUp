@@ -1,5 +1,22 @@
 {% include head.html %}
 
-<div class="navbar navbar-default">
-    <img src="{{ site.baseurl }}/images/{{ page.logo }}" class="navbar-brand"></img>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
+        <img src="{{ site.baseurl }}/images/{{ page.logo }}" class="navbar-brand"></img>
+    </div>
+    
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="#queue">Queue</a></li>
+        <li><a href="#bench">Bench</a></li>
+    </ul>
+    
+    <div id="navbar" class="navbar-collapse collapse in" aria-expanded="true">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="#foo">Foo</a></li>
+        <li><a href="#bar">Bar</a></li>
+    </ul>
+    
+    {% include navbarLogin.html %}
+    
+    </div>
 </div>
