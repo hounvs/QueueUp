@@ -159,8 +159,8 @@
         // Form submission for registering
         form.on('submit', function (e) {
 
-            var userAndPass = $(this).serializeObject();
-            var loginPromise = createUserAndLogin(userAndPass);
+            var userObj = $(this).serializeObject();
+            var loginPromise = createUserAndLogin(userObj);
             e.preventDefault();
 
             handleAuthResponse(loginPromise, 'profile');
