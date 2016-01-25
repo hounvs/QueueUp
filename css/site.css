@@ -1,3 +1,7 @@
 img.navbar-brand {
     padding: 0;
 }
+
+form {
+    display: none;
+}
