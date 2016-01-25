@@ -1,86 +1,302 @@
-var firebaseApp = 'queueup';
+(function (jQuery, Firebase, Path) {
+    "use strict";
 
-function createUser(email, password) {
-    var ref = new Firebase("https://" + firebaseApp +".firebaseio.com");
-    ref.createUser({
-        email    : email,
-        password : password
-    }, function(error, userData) {
-        if (error) {
-            console.log("Error creating user:", error);
-        } else {
-            console.log("Successfully created user account with uid:", userData.uid);
+    // the main firebase reference
+    var rootRef = new Firebase('https://queueup.firebaseio.com/web/uauth');
+
+    // pair our routes to our form elements and controller
+    var routeMap = {
+        '#/': {
+            form: 'frmLogin',
+            controller: 'login'
+        },
+            '#/logout': {
+            form: 'frmLogout',
+            controller: 'logout'
+        },
+            '#/register': {
+            form: 'frmRegister',
+            controller: 'register'
+        },
+            '#/profile': {
+            form: 'frmProfile',
+            controller: 'profile',
+            authRequired: true // must be logged in to get here
+        },
+    };
+
+    // create the object to store our controllers
+    var controllers = {};
+
+    // store the active form shown on the page
+    var activeForm = null;
+
+    var alertBox = $('#alert');
+
+    function routeTo(route) {
+        window.location.href = '#/' + route;
+    }
+
+    // Handle Email/Password login
+    // returns a promise
+    function authWithPassword(userObj) {
+        var deferred = $.Deferred();
+        console.log(userObj);
+        rootRef.authWithPassword(userObj, function onAuth(err, user) {
+            if (err) {
+                deferred.reject(err);
+            }
+
+            if (user) {
+                deferred.resolve(user);
+            }
+
+        });
+
+        return deferred.promise();
+    }
+
+    // create a user but not login
+    // returns a promsie
+    function createUser(userObj) {
+        var deferred = $.Deferred();
+        rootRef.createUser(userObj, function (err) {
+
+            if (!err) {
+                deferred.resolve();
+            } else {
+                deferred.reject(err);
+            }
+
+        });
+
+        return deferred.promise();
+    }
+
+    // Create a user and then login in
+    // returns a promise
+    function createUserAndLogin(userObj) {
+        return createUser(userObj)
+            .then(function () {
+            return authWithPassword(userObj);
+        });
+    }
+
+    // route to the specified route if sucessful
+    // if there is an error, show the alert
+    function handleAuthResponse(promise, route) {
+        $.when(promise)
+            .then(function (authData) {
+
+            // route
+            routeTo(route);
+
+        }, function (err) {
+            console.log(err);
+            // pop up error
+            showAlert({
+                title: err.code,
+                detail: err.message,
+                className: 'alert-danger'
+            });
+
+        });
+    }
+
+    // options for showing the alert box
+    function showAlert(opts) {
+        var title = opts.title;
+        var detail = opts.detail;
+        var className = 'alert ' + opts.className;
+
+        alertBox.removeClass().addClass(className);
+        alertBox.children('#alert-title').text(title);
+        alertBox.children('#alert-detail').text(detail);
+    }
+
+    /// Controllers
+    ////////////////////////////////////////
+
+    controllers.login = function (form) {
+
+        // Form submission for logging in
+        form.on('submit', function (e) {
+
+            var userAndPass = $(this).serializeObject();
+            var loginPromise = authWithPassword(userAndPass);
+            e.preventDefault();
+
+            handleAuthResponse(loginPromise, 'profile');
+
+        });
+
+        // Social buttons
+        form.children('.bt-social').on('click', function (e) {
+
+            var $currentButton = $(this);
+            var provider = $currentButton.data('provider');
+            var socialLoginPromise;
+            e.preventDefault();
+
+            socialLoginPromise = thirdPartyLogin(provider);
+            handleAuthResponse(socialLoginPromise, 'profile');
+
+        });
+
+        form.children('#btAnon').on('click', function (e) {
+            e.preventDefault();
+            handleAuthResponse(authAnonymously(), 'profilex');
+        });
+
+    };
+
+    // logout immediately when the controller is invoked
+    controllers.logout = function (form) {
+        rootRef.unauth();
+    };
+
+    controllers.register = function (form) {
+
+        // Form submission for registering
+        form.on('submit', function (e) {
+
+            var userAndPass = $(this).serializeObject();
+            var loginPromise = createUserAndLogin(userAndPass);
+            e.preventDefault();
+
+            handleAuthResponse(loginPromise, 'profile');
+
+        });
+
+    };
+
+    controllers.profile = function (form) {
+        // Check the current user
+        var user = rootRef.getAuth();
+        var userRef;
+
+        // If no current user send to register page
+        if (!user) {
+            routeTo('register');
+            return;
         }
-    });
-}
 
-function authWithPassword(email, password) {
-    var ref = new Firebase("https://" + firebaseApp +".firebaseio.com");
-    ref.authWithPassword({
-        email    : email,
-        password : password
-    }, function(error, authData) {
-      if (error) {
-        console.log("Login Failed!", error);
-      } else {
-        console.log("Authenticated successfully with payload:", authData);
-      }
-    });
-}
+        // Load user info
+        userRef = rootRef.child('users').child(user.uid);
+        userRef.once('value', function (snap) {
+            var user = snap.val();
+            if (!user) {
+                return;
+            }
 
-function changeEmail(oldEmail, newEmail, password) {
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-    ref.changeEmail({
-      oldEmail : oldEmail,
-      newEmail : newEmail,
-      password : password
-    }, function(error) {
-      if (error === null) {
-        console.log("Email changed successfully");
-      } else {
-        console.log("Error changing email:", error);
-      }
-    });
-}
+            // set the fields
+            form.find('#userName').val(user.userName);
+            form.find('#mainCharacter').val(user.mainCharacter);
+        });
 
-function changePassword(email, oldPassword, newPassword) {
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-    ref.changePassword({
-      email       : email,
-      oldPassword : oldPassword,
-      newPassword : newPassword
-    }, function(error) {
-      if (error === null) {
-        console.log("Password changed successfully");
-      } else {
-        console.log("Error changing password:", error);
-      }
-    });
-}
+        // Save user's info to Firebase
+        form.on('submit', function (e) {
+            e.preventDefault();
+            var userInfo = $(this).serializeObject();
 
-function resetPassword(email) {
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-    ref.resetPassword({
-      email : email
-    }, function(error) {
-      if (error === null) {
-        console.log("Password reset email sent successfully");
-      } else {
-        console.log("Error sending password reset email:", error);
-      }
-    });
-}
+            userRef.set(userInfo, function onComplete() {
 
-function removeUser(email, password) {
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
-    ref.removeUser({
-      email    : email,
-      password : password
-    }, function(error) {
-      if (error === null) {
-        console.log("User removed successfully");
-      } else {
-        console.log("Error removing user:", error);
-      }
+                // show the message if write is successful
+                showAlert({
+                    title: 'Successfully saved!',
+                    className: 'alert-success'
+                });
+
+            });
+        });
+
+    };
+
+    /// Routing
+    ////////////////////////////////////////
+
+    // Handle transitions between routes
+    function transitionRoute(path) {
+        // grab the config object to get the form element and controller
+        var formRoute = routeMap[path];
+        var currentUser = rootRef.getAuth();
+
+        // if authentication is required and there is no
+        // current user then go to the register page and
+        // stop executing
+        if (formRoute.authRequired && !currentUser) {
+            routeTo('register');
+            return;
+        }
+
+        // wrap the upcoming form in jQuery
+        var upcomingForm = $('#' + formRoute.form);
+
+        // if there is no active form then make the current one active
+        if (!activeForm) {
+            activeForm = upcomingForm;
+        }
+
+        // hide old form and show new form
+        activeForm.hide();
+        upcomingForm.show().hide().fadeIn(750);
+
+        // remove any listeners on the soon to be switched form
+        activeForm.off();
+
+        // set the new form as the active form
+        activeForm = upcomingForm;
+
+        // invoke the controller
+        controllers[formRoute.controller](activeForm);
+    }
+
+    // Set up the transitioning of the route
+    function prepRoute() {
+        transitionRoute(this.path);
+    }
+
+
+    /// Routes
+    ///  #/         - Login
+    //   #/logout   - Logut
+    //   #/register - Register
+    //   #/profile  - Profile
+
+    Path.map("#/").to(prepRoute);
+    Path.map("#/logout").to(prepRoute);
+    Path.map("#/register").to(prepRoute);
+    Path.map("#/profile").to(prepRoute);
+
+    Path.root("#/");
+
+    /// Initialize
+    ////////////////////////////////////////
+
+    $(function () {
+
+        // Start the router
+        Path.listen();
+
+        // whenever authentication happens send a popup
+        rootRef.onAuth(function globalOnAuth(authData) {
+
+            if (authData) {
+                showAlert({
+                    title: 'Logged in!',
+                    detail: 'Using ' + authData.provider,
+                    className: 'alert-success'
+                });
+            } else {
+                showAlert({
+                    title: 'You are not logged in',
+                    detail: '',
+                    className: 'alert-info'
+                });
+            }
+
+        });
+
     });
-}
+
+}(window.jQuery, window.Firebase, window.Path))
