@@ -10,10 +10,29 @@
             <h2 class="panel-title">Profile</h2>
         </div>
         <div class="panel-body">
+            <img id="gravatar" src="" alt="gravatar" height="80px" width="80" />
+            <div class="well well-sm">
+                Snagged from <a href="http://www.gravatar.com">Gravater</a>
+            </div>
             <div class="form-group">
-                <img id="gravatar" src="" alt="gravatar" height="80px" width="80" />
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Name" name="name" />
+                <input type="text" class="form-control" id="name" placeholder="Name" name="name" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="oldEmail">Current Email</label>
+                <input type="text" class="form-control" id="oldEmail" placeholder="user@example.com" name="oldEmail" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="newEmail">New Email</label>
+                <input type="text" class="form-control" id="newEmail" placeholder="user@example.com" name="newEmail" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="oldPassword">Current Password</label>
+                <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="off" />
             </div>
             <!-- <div class="form-group">
             <label for="ddlDino">Favorite Dinosaur</label>
@@ -26,6 +45,6 @@
             </select>
             </div> -->
         </div>
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
     </div>
-    <button type="submit" class="btn btn-primary">Update</button>
 </form>

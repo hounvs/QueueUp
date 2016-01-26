@@ -174,6 +174,7 @@
             // set the fields
             form.find('#gravatar').attr("src", user.password.profileImageURL);
             form.find('#name').val(user.name);
+            form.find('#oldEmail').val(user.password.email);
             form.find('#mainCharacter').val(user.mainCharacter);
         });
 
