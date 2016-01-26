@@ -84,17 +84,21 @@
     function handleAuthResponse(promise, route) {
         $.when(promise)
             .then(function (authData) {
-
-            // route
-            routeTo(route);
-
-        }, function (err) {
-            // pop up error
-            showAlert({
-                title: err.code,
-                detail: err.message,
-                className: 'alert-danger'
-            });
+                showAlert({
+                    title: '',
+                    detail: '',
+                    className: ''
+                });
+                
+                // route
+                routeTo(route);
+            }, function (err) {
+                // pop up error
+                showAlert({
+                    title: err.code,
+                    detail: err.message,
+                    className: 'alert-danger'
+                });
 
         });
     }
@@ -126,25 +130,6 @@
             handleAuthResponse(loginPromise, 'profile');
 
         });
-
-        // Social buttons
-        form.children('.bt-social').on('click', function (e) {
-
-            var $currentButton = $(this);
-            var provider = $currentButton.data('provider');
-            var socialLoginPromise;
-            e.preventDefault();
-
-            socialLoginPromise = thirdPartyLogin(provider);
-            handleAuthResponse(socialLoginPromise, 'profile');
-
-        });
-
-        form.children('#btAnon').on('click', function (e) {
-            e.preventDefault();
-            handleAuthResponse(authAnonymously(), 'profilex');
-        });
-
     };
 
     // logout immediately when the controller is invoked
