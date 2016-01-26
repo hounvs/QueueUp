@@ -154,28 +154,28 @@
 
     controllers.profile = function (form) {
         // Check the current user
-        var user = rootRef.getAuth();
+        var userAuth = rootRef.getAuth();
         var userRef;
 
         // If no current user send to login page
-        if (!user) {
+        if (!userAuth) {
             routeTo('login');
             return;
         }
 
         // Load user info
-        userRef = rootRef.child('users').child(user.uid);
+        userRef = rootRef.child('users').child(userAuth.uid);
         userRef.once('value', function (snap) {
             var user = snap.val();
             if (!user) {
                 return;
             }
-            console.log(user);
-            console.log(user.password);
-            // set the fields
-            form.find('#gravatar').attr("src", user.password.profileImageURL);
+            
+            // userAuth fields
+            form.find('#gravatar').attr("src", userAuth.password.profileImageURL);
+            form.find('#oldEmail').val(userAuth.password.email);
+            // user fields
             form.find('#name').val(user.name);
-            form.find('#oldEmail').val(user.password.email);
             form.find('#mainCharacter').val(user.mainCharacter);
         });
 
