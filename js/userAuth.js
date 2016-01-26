@@ -6,20 +6,20 @@
 
     // pair our routes to our form elements and controller
     var routeMap = {
-        '#': {
+        '#/profile': {
             form: 'frmProfile',
             controller: 'profile',
             authRequired: true // must be logged in to get here
         },
-        '#login': {
+        '#/login': {
             form: 'frmLogin',
             controller: 'login'
         },
-            '#logout': {
+        '#/logout': {
             form: 'frmLogout',
             controller: 'logout'
         },
-            '#register': {
+        '#/register': {
             form: 'frmRegister',
             controller: 'register'
         },
@@ -34,7 +34,7 @@
     var alertBox = $('#alert');
 
     function routeTo(route) {
-        window.location.href = '#' + route;
+        window.location.href = '#/' + route;
     }
 
     // Handle Email/Password login
@@ -258,17 +258,17 @@
 
 
     /// Routes
-    ///  #/         - Login
+    ///  #/profile  - Profile
+    //   #/login    - Login
     //   #/logout   - Logut
     //   #/register - Register
-    //   #/profile  - Profile
 
-    Path.map("#").to(prepRoute);
-    Path.map("#logout").to(prepRoute);
-    Path.map("#register").to(prepRoute);
-    Path.map("#profile").to(prepRoute);
+    Path.map("#/profile").to(prepRoute);
+    Path.map("#/login").to(prepRoute);
+    Path.map("#/logout").to(prepRoute);
+    Path.map("#/register").to(prepRoute);
 
-    Path.root("#");
+    Path.root("#/profile");
 
     /// Initialize
     ////////////////////////////////////////
