@@ -2,24 +2,24 @@
 
 To contribute to the completion of this community tool you will need a basic understanding of how Git and GitHub work. In the following sections I will do a basic overview of Git/GitHub commands and terminology, followed by a tutorial on how to make your changes to the build, and finally making a pull request.
 
-## What you need
+# What you need
 
 ### Required
 - [GitHub](https://github.com/) free account
-    - [Instructions](git-and-gitHub)
     - [GitHub Pages to see changes in your repository](https://pages.github.com/)
+    - Instructions: See below
 - [FireBase](https://www.firebase.com/) free account
-    - [Instructions](Firebase)
+    - Instructions: See below
 - [GitHub Desktop](https://desktop.github.com/) (easier) or just [Git Bash](https://git-scm.com/downloads) for command line only
     
 ### Optional
 #### Otherwise you will have to push to your local repository every time you want to test something
-- [Ruby](https://www.ruby-lang.org/en/downloads/) (I used 2.2.3 for all of my development)
+- [Ruby](https://www.ruby-lang.org/en/downloads/) (2.2.3 was used for all of development though it shouldn't matter)
 - [Jekyll](http://jekyllrb.com/)
     - [Windows has extra steps](http://jekyllrb.com/docs/windows/)
     - Once set up, only need to do `jekyll cd path/to/local/QueueUp` and then `jekyll serve --watch`
 
-## Git and GitHub
+# Git and GitHub
 
 ### What is Git?
 
@@ -198,27 +198,27 @@ For more information on resetting your fork to a previous version, see this link
 - [Git Town Plugin for Simplifying Git Workflow](http://www.git-town.com/)
 - [Full Git Documentation](http://git-scm.com/documentation)
 
-## Firebase
+# Firebase
 
 Create firebase app
 
 1. Security and Rules
     -FIREBASE RULES
-        ```
-        {
-          "rules": {
-            "users": {
-              "$uid": {
-                // grants write access to the owner of this user account whose uid must exactly match the key ($uid)
-                ".write": "auth !== null && auth.uid === $uid",
+```
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        // grants write access to the owner of this user account whose uid must exactly match the key ($uid)
+        ".write": "auth !== null && auth.uid === $uid",
 
-                // grants read access to any user who is logged in with an email and password
-                ".read": "auth !== null && (auth.provider === 'password' || auth.provider === 'anonymous')"
-              }
-            }
-          }
-        }
-        ```
+        // grants read access to any user who is logged in with an email and password
+        ".read": "auth !== null && (auth.provider === 'password' || auth.provider === 'anonymous')"
+      }
+    }
+  }
+}
+```
 2. Login & Auth
     - Authorized Domains for OAuth Redirects
         - Add your github pages URL
@@ -230,4 +230,4 @@ Create firebase app
 3. Set main firebase reference in userAuth.js, line 5
     - Example: var rootRef = new Firebase('https://queueup.firebaseio.com/');
 
-## Credits to @andybond006 for this documentation
+Credits to @andybond006 for this documentation
