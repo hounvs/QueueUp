@@ -43,13 +43,10 @@
             if (err) {
                 deferred.reject(err);
             }
-
             if (user) {
                 deferred.resolve(user);
             }
-
         });
-
         return deferred.promise();
     }
 
@@ -58,15 +55,12 @@
     function createUser(userObj) {
         var deferred = $.Deferred();
         rootRef.createUser(userObj, function (err) {
-
             if (!err) {
                 deferred.resolve();
             } else {
                 deferred.reject(err);
             }
-
         });
-
         return deferred.promise();
     }
 
@@ -77,6 +71,21 @@
             .then(function () {
             return authWithPassword(userObj);
         });
+    }
+    
+    // authenticate anonymously
+    // returns a promise
+    function authAnonymously() {
+        var deferred = $.Deferred();
+        rootRef.authAnonymously(function (err, authData) {
+            if (authData) {
+                deferred.resolve(authData);
+            }
+            if (err) {
+                deferred.reject(err);
+            }
+        });
+        return deferred.promise();
     }
 
     // route to the specified route if sucessful
@@ -99,7 +108,6 @@
                     detail: err.message,
                     className: 'alert-danger'
                 });
-
         });
     }
 
@@ -122,13 +130,16 @@
 
         // Form submission for logging in
         form.on('submit', function (e) {
-
+            e.preventDefault();
             var userAndPass = $(this).serializeObject();
             var loginPromise = authWithPassword(userAndPass);
-            e.preventDefault();
 
             handleAuthResponse(loginPromise, 'profile');
-
+        });
+        
+        form.find('#btnGuest').on('click', function (e) {
+            e.preventDefault();
+            handleAuthResponse(authAnonymously(), 'profile');
         });
     };
 
@@ -141,13 +152,11 @@
 
         // Form submission for registering
         form.on('submit', function (e) {
-
+            e.preventDefault();
             var userObj = $(this).serializeObject();
             var loginPromise = createUserAndLogin(userObj);
-            e.preventDefault();
 
             handleAuthResponse(loginPromise, 'profile');
-
         });
 
     };
