@@ -15,12 +15,3 @@ form {
 .icon > svg path {
     fill: #828282;
 }
-
-body > .container {
-  padding: 60px 15px 0;
-}
-
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
