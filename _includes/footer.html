@@ -1,26 +1,17 @@
-        <hr/>
-        
-        <footer class="site-footer">
-
+        <footer>
+            <hr/>
             <div class="wrapper">
+                <table class="table">
+                    <tr class="danger">
+                        <td>Contact</td>
+                        <td>{% include icon-github.html username=site.github_username %}</td>
+                        <td>{% include icon-twitter.html username=site.twitter_username %}</td>
+                        <td><a href="https://github.com/hounvs/QueueUp/issues">Issues Tracker</a></td>
+                    </tr>
+                </table>
 
-                <h2 class="footer-heading">Contact</h2>
-
-                <div class="footer-col-wrapper">
-                    <div class="footer-col footer-col-2">
-                        <table>
-                            <tr>
-                                <td>Contact</td>
-                                <td>{% include icon-github.html username=site.github_username %}</td>
-                                <td>{% include icon-twitter.html username=site.twitter_username %}</td>
-                                <td><a href="https://github.com/hounvs/QueueUp/issues">Issues Tracker</a></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="footer-col footer-col-3">
-                        <p>{{ site.description }}</p>
-                    </div>
+                <div class="footer-col footer-col-3">
+                    <p>{{ site.description }}</p>
                 </div>
             </div>
         </footer>
