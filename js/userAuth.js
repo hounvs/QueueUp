@@ -190,6 +190,8 @@
                     title: 'Successfully saved!',
                     className: 'alert-success'
                 });
+                
+                window.setTimeout(function() { $("#alert").alert('close'); }, 2000);
             });
         });
 
