@@ -269,33 +269,4 @@
 
     Path.root("#/profile");
 
-    /// Initialize
-    ////////////////////////////////////////
-
-    $(function () {
-
-        // Start the router
-        Path.listen();
-
-        // whenever authentication happens send a popup
-        rootRef.onAuth(function globalOnAuth(authData) {
-
-            if (authData) {
-                showAlert({
-                    title: 'Logged in!',
-                    detail: 'Using ' + authData.provider,
-                    className: 'alert-success'
-                });
-            } else {
-                showAlert({
-                    title: 'You are not logged in',
-                    detail: '',
-                    className: 'alert-info'
-                });
-            }
-
-        });
-
-    });
-
 }(window.jQuery, window.Firebase, window.Path))
