@@ -87,7 +87,7 @@
                 showAlert({
                     title: '',
                     detail: '',
-                    className: ''
+                    className: 'hidden'
                 });
                 
                 // route
