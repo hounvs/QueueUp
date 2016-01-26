@@ -172,7 +172,7 @@
             }
 
             // set the fields
-            form.find('#gravatar').val(user.password.profileImageURL);
+            form.find('#gravatar').attr("src", user.password.profileImageURL);
             form.find('#name').val(user.name);
             form.find('#mainCharacter').val(user.mainCharacter);
         });
