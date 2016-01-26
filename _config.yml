@@ -11,6 +11,7 @@ baseurl: "/QueueUp" # the subpath of your site, e.g. /blog
 url: "http://hounvs.github.io" # the base hostname & protocol for your site
 twitter_username: hounvs
 github_username:  hounvs
+description: Queueing system and stat tracker for games
 
 # Build settings
 markdown: kramdown

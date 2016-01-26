@@ -1,3 +1,5 @@
+        <hr/>
+        
         <footer class="site-footer">
 
             <div class="wrapper">
@@ -6,19 +8,14 @@
 
                 <div class="footer-col-wrapper">
                     <div class="footer-col footer-col-2">
-                        <ul class="social-media-list">
-                            {% if site.github_username %}
-                                <li>
-                                    {% include icon-github.html username=site.github_username %}
-                                </li>
-                            {% endif %}
-
-                            {% if site.twitter_username %}
-                                <li>
-                                    {% include icon-twitter.html username=site.twitter_username %}
-                                </li>
-                            {% endif %}
-                        </ul>
+                        <table>
+                            <tr>
+                                <td>Contact</td>
+                                <td>{% include icon-github.html username=site.github_username %}</td>
+                                <td>{% include icon-twitter.html username=site.twitter_username %}</td>
+                                <td><a href="https://github.com/hounvs/QueueUp/issues">Issues Tracker</a></td>
+                            </tr>
+                        </table>
                     </div>
 
                     <div class="footer-col footer-col-3">
