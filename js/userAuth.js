@@ -7,6 +7,11 @@
     // pair our routes to our form elements and controller
     var routeMap = {
         '#/': {
+            form: 'frmProfile',
+            controller: 'profile',
+            authRequired: true // must be logged in to get here
+        },
+        '#/login': {
             form: 'frmLogin',
             controller: 'login'
         },
@@ -17,11 +22,6 @@
             '#/register': {
             form: 'frmRegister',
             controller: 'register'
-        },
-            '#/profile': {
-            form: 'frmProfile',
-            controller: 'profile',
-            authRequired: true // must be logged in to get here
         },
     };
 
@@ -152,7 +152,7 @@
     // logout immediately when the controller is invoked
     controllers.logout = function (form) {
         rootRef.unauth();
-        routeTo('');
+        routeTo('login');
     };
 
     controllers.register = function (form) {
@@ -177,7 +177,7 @@
 
         // If no current user send to register page
         if (!user) {
-            routeTo('register');
+            routeTo('login');
             return;
         }
 
@@ -225,7 +225,7 @@
         // current user then go to the register page and
         // stop executing
         if (formRoute.authRequired && !currentUser) {
-            routeTo('register');
+            routeTo('login');
             return;
         }
 
