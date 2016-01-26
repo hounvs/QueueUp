@@ -31,8 +31,6 @@
     // store the active form shown on the page
     var activeForm = null;
 
-    var alertBox = $('#alert');
-
     function routeTo(route) {
         window.location.href = '#/' + route;
     }
@@ -107,7 +105,8 @@
         var title = opts.title;
         var detail = opts.detail;
         var className = 'alert ' + opts.className;
-
+        var alertBox = $('#alert');
+        
         alertBox.removeClass().addClass(className);
         alertBox.children('#alert-title').text(title);
         alertBox.children('#alert-detail').text(detail);
@@ -190,7 +189,7 @@
             }
 
             // set the fields
-            form.find('#userName').val(user.userName);
+            form.find('#name').val(user.name);
             form.find('#mainCharacter').val(user.mainCharacter);
         });
 
