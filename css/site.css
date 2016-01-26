@@ -1,3 +1,17 @@
 img.navbar-brand {
     padding: 0;
 }
+
+form {
+    display: none;
+}
+
+.icon > svg {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.icon > svg path {
+    fill: #FFFFFF;
+}
