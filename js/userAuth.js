@@ -2,7 +2,7 @@
     "use strict";
 
     // the main firebase reference
-    var rootRef = new Firebase('https://queueup.firebaseio.com/web/uauth');
+    var rootRef = new Firebase('https://queueup.firebaseio.com/');
 
     // pair our routes to our form elements and controller
     var routeMap = {
