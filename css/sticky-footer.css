@@ -6,13 +6,22 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 30px;
+  height: 40px;
   background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 40px 0 0;
 }
