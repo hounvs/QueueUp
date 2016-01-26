@@ -263,12 +263,12 @@
     //   #/register - Register
     //   #/profile  - Profile
 
-    Path.map("#/").to(prepRoute);
-    Path.map("#/logout").to(prepRoute);
-    Path.map("#/register").to(prepRoute);
-    Path.map("#/profile").to(prepRoute);
+    Path.map("#").to(prepRoute);
+    Path.map("#logout").to(prepRoute);
+    Path.map("#register").to(prepRoute);
+    Path.map("#profile").to(prepRoute);
 
-    Path.root("#/");
+    Path.root("#");
 
     /// Initialize
     ////////////////////////////////////////
