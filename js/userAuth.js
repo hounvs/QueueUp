@@ -6,20 +6,20 @@
 
     // pair our routes to our form elements and controller
     var routeMap = {
-        '#/': {
+        '#': {
             form: 'frmProfile',
             controller: 'profile',
             authRequired: true // must be logged in to get here
         },
-        '#/login': {
+        '#login': {
             form: 'frmLogin',
             controller: 'login'
         },
-            '#/logout': {
+            '#logout': {
             form: 'frmLogout',
             controller: 'logout'
         },
-            '#/register': {
+            '#register': {
             form: 'frmRegister',
             controller: 'register'
         },
@@ -34,7 +34,7 @@
     var alertBox = $('#alert');
 
     function routeTo(route) {
-        window.location.href = '#/' + route;
+        window.location.href = '#' + route;
     }
 
     // Handle Email/Password login
@@ -175,7 +175,7 @@
         var user = rootRef.getAuth();
         var userRef;
 
-        // If no current user send to register page
+        // If no current user send to login page
         if (!user) {
             routeTo('login');
             return;
@@ -222,7 +222,7 @@
         var currentUser = rootRef.getAuth();
 
         // if authentication is required and there is no
-        // current user then go to the register page and
+        // current user then go to the login page and
         // stop executing
         if (formRoute.authRequired && !currentUser) {
             routeTo('login');
