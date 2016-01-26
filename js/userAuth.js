@@ -170,7 +170,8 @@
             if (!user) {
                 return;
             }
-
+            console.log(user);
+            console.log(user.password);
             // set the fields
             form.find('#gravatar').attr("src", user.password.profileImageURL);
             form.find('#name').val(user.name);
