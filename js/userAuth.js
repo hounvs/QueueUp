@@ -135,7 +135,6 @@
     // logout immediately when the controller is invoked
     controllers.logout = function (form) {
         rootRef.unauth();
-        routeTo('login');
     };
 
     controllers.register = function (form) {
@@ -173,6 +172,7 @@
             }
 
             // set the fields
+            form.find('#gravatar').val(user.password.profileImageURL);
             form.find('#name').val(user.name);
             form.find('#mainCharacter').val(user.mainCharacter);
         });
@@ -183,13 +183,11 @@
             var userInfo = $(this).serializeObject();
 
             userRef.set(userInfo, function onComplete() {
-
                 // show the message if write is successful
                 showAlert({
                     title: 'Successfully saved!',
                     className: 'alert-success'
                 });
-
             });
         });
 
