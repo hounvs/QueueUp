@@ -269,4 +269,12 @@
 
     Path.root("#/profile");
 
+    /// Initialize
+    ////////////////////////////////////////
+
+    $(function () {
+        // Start the router
+        Path.listen();
+    });
+
 }(window.jQuery, window.Firebase, window.Path))
