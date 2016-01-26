@@ -89,7 +89,6 @@
             routeTo(route);
 
         }, function (err) {
-            console.log(err);
             // pop up error
             showAlert({
                 title: err.code,

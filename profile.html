@@ -6,16 +6,16 @@ title: Profile
 
 
 <div id="container" class="container">
+    <!-- ALERT BOX -->
+    <div id="alert" class="alert" role="alert">
+        <h4 id="alert-title"></h4>
+        <p id="alert-detail"></p>
+    </div>
+    <hr />
+    <!-- / ALERT BOX -->
     <!-- LOGIN -->
     <form id="frmLogin" role="form">
-        <div>
-            <a class="btn btn-link btn-block" href="#/register">Don't have an account? Register here</a>
-        </div>
-        
-        <hr/>
-        
         <h2>Login</h2>
-
         <div class="form-group">
             <label for="txtEmail">Email address</label>
             <input type="email" class="form-control" id="txtEmail" placeholder="Enter email" name="email" />
@@ -25,7 +25,10 @@ title: Profile
             <input type="password" class="form-control" id="txtPass" placeholder="Password" name="password" />
         </div>
         <button type="submit" class="btn btn-primary btn-block">Login</button>
-
+        <hr/>
+        <div>
+            <a class="btn btn-link btn-block" href="#/register">Don't have an account? Register here</a>
+        </div>
     </form>
     <!-- / LOGIN -->
     <!-- LOGOUT -->
@@ -35,12 +38,6 @@ title: Profile
     <!-- / LOGOUT -->
     <!-- REGISTER -->
     <form id="frmRegister" role="form">
-        <div>
-            <a class="btn btn-link btn-block" href="#/login">Already have an account? Login here</a>
-        </div>
-        
-        <hr/>
-        
         <h2>Register</h2>
         <div class="form-group">
             <label for="txtRegEmail">Email address</label>
@@ -51,6 +48,10 @@ title: Profile
             <input type="password" class="form-control" id="txtPass" placeholder="Password" name="password" />
         </div>
         <button type="submit" class="btn btn-success">Register</button>
+        <hr/>
+        <div>
+            <a class="btn btn-link btn-block" href="#/login">Already have an account? Login here</a>
+        </div>
     </form>
     <!-- / REGISTER -->
     <!-- PROFILE -->
@@ -79,11 +80,4 @@ title: Profile
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
     <!-- / PROFILE -->
-    <hr />
-    <!-- ALERT BOX -->
-    <div id="alert" class="alert" role="alert">
-        <h4 id="alert-title"></h4>
-        <p id="alert-detail"></p>
-    </div>
-    <!-- / ALERT BOX -->
 </div>
