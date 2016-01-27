@@ -6,6 +6,11 @@
 
     // pair our routes to our form elements and controller
     var routeMap = {
+        '#/queue': {
+            form: 'frmQueue',
+            controller: 'queue',
+            authRequired: true // must be logged in to get here
+        },
         '#/profile': {
             form: 'frmProfile',
             controller: 'profile',
@@ -22,6 +27,22 @@
         '#/register': {
             form: 'frmRegister',
             controller: 'register'
+        },
+        '#/forgotPassword': {
+            form: 'frmForgotPassword',
+            controller: 'forgotPassword'
+        },
+        '#/changePassword': {
+            form: 'frmChangePassword',
+            controller: 'changePassword',
+            authRequired: true, // must be logged in to get here
+            accountRequired: true // must have an account to get here
+        },
+        '#/changeEmail': {
+            form: 'frmChangeEmail',
+            controller: 'changeEmail',
+            authRequired: true, // must be logged in to get here
+            accountRequired: true // must have an account to get here
         },
     };
 
@@ -50,6 +71,21 @@
         return deferred.promise();
     }
 
+    // authenticate anonymously
+    // returns a promise
+    function authAnonymously() {
+        var deferred = $.Deferred();
+        rootRef.authAnonymously(function (err, authData) {
+            if (authData) {
+                deferred.resolve(authData);
+            }
+            if (err) {
+                deferred.reject(err);
+            }
+        });
+        return deferred.promise();
+    }
+    
     // create a user but not login
     // returns a promsie
     function createUser(userObj) {
@@ -71,21 +107,6 @@
             .then(function () {
             return authWithPassword(userObj);
         });
-    }
-    
-    // authenticate anonymously
-    // returns a promise
-    function authAnonymously() {
-        var deferred = $.Deferred();
-        rootRef.authAnonymously(function (err, authData) {
-            if (authData) {
-                deferred.resolve(authData);
-            }
-            if (err) {
-                deferred.reject(err);
-            }
-        });
-        return deferred.promise();
     }
 
     // route to the specified route if sucessful
@@ -110,6 +131,22 @@
                 });
         });
     }
+    
+    // changes the users password
+    function changePassword(userObj) {
+        var deferred = $.Deferred();
+        rootRef.changePassword(userObj, function(err) {
+            if (err) {
+                if (!err) {
+                    deferred.resolve();
+                } else {
+                    deferred.reject(err);
+                }
+            }
+        });
+        return deferred.promise();
+    }
+    
 
     // options for showing the alert box
     function showAlert(opts) {
@@ -127,12 +164,11 @@
     ////////////////////////////////////////
 
     controllers.login = function (form) {
-
         // Form submission for logging in
         form.on('submit', function (e) {
             e.preventDefault();
-            var userAndPass = $(this).serializeObject();
-            var loginPromise = authWithPassword(userAndPass);
+            var userObj = $(this).serializeObject();
+            var loginPromise = authWithPassword(userObj);
 
             handleAuthResponse(loginPromise, 'profile');
         });
@@ -149,7 +185,6 @@
     };
 
     controllers.register = function (form) {
-
         // Form submission for registering
         form.on('submit', function (e) {
             e.preventDefault();
@@ -174,18 +209,18 @@
 
         // Load user info
         userRef = rootRef.child('users').child(userAuth.uid);
-        userRef.once('value', function (snap) {
-            var user = snap.val();
-            if (!user) {
-                return;
-            }
+        userRef.once('value', function (snapshot) {
+            var user = snapshot.val();
             
             // userAuth fields
-            form.find('#gravatar').attr("src", userAuth.password.profileImageURL);
-            form.find('#oldEmail').val(userAuth.password.email);
-            // user fields
-            form.find('#name').val(user.name);
-            form.find('#mainCharacter').val(user.mainCharacter);
+            if(userAuth.password) {
+                form.find('#gravatar').attr("src", userAuth.password.profileImageURL);
+                // user fields
+                form.find('#name').val(user.name);
+                form.find('#mainCharacter').val(user.mainCharacter);
+            } else {
+                form.find('#gravatar').attr("src", "http://www.gravatar.com/avatar/00000000000000000000000000000000");
+            }
         });
 
         // Save user's info to Firebase
@@ -201,7 +236,27 @@
                 });
             });
         });
+    };
+    
+    controllers.changePassword = function (form) {
+        // Check the current user
+        var userAuth = rootRef.getAuth();
+        var userRef;
 
+        // If no current user send to login page
+        if (!userAuth || userAuth.anonymous) {
+            routeTo('login');
+            return;
+        }
+        
+        // Form submission for logging in
+        form.on('submit', function (e) {
+            e.preventDefault();
+            var userObj = $(this).serializeObject();
+            var changePasswordPromise = changePassword(userObj);
+
+            handleAuthResponse(changePasswordPromise, 'profile');
+        });
     };
 
     /// Routing
@@ -218,6 +273,11 @@
         // stop executing
         if (formRoute.authRequired && !currentUser) {
             routeTo('login');
+            return;
+        }
+        
+        if(formRoute.accountRequired && currentUser.anonymous) {
+            routeTo('register');
             return;
         }
 
@@ -259,6 +319,9 @@
     Path.map("#/login").to(prepRoute);
     Path.map("#/logout").to(prepRoute);
     Path.map("#/register").to(prepRoute);
+    Path.map("#/forgotPassword").to(prepRoute);
+    Path.map("#/changePassword").to(prepRoute);
+    Path.map("#/changeEmail").to(prepRoute);
 
     Path.root("#/profile");
 
