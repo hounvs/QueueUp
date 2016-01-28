@@ -253,9 +253,23 @@
         form.on('submit', function (e) {
             e.preventDefault();
             var userObj = $(this).serializeObject();
+            if(!userObj.newPassword) {
+                showAlert({
+                    title: 'Enter a new password',
+                    className: 'alert-danger'
+                });
+                return;
+            } else if(userObj.newPassword !== userObj.confirmNewPassword) {
+                showAlert({
+                    title: 'New Password does not match Confirm New Password',
+                    className: 'alert-danger'
+                });
+                return;
+            }
+            
             var changePasswordPromise = changePassword(userObj);
 
-            handleAuthResponse(changePasswordPromise, 'profile');
+            handleAuthResponse(changePasswordPromise, 'logout');
         });
     };
 
