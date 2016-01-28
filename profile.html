@@ -12,18 +12,17 @@ title: Profile
         <p id="alert-detail"></p>
     </div>
     <!-- / ALERT BOX -->
-    <!-- LOGIN -->
-    {% include loginForm.html %}
-    <!-- / LOGIN -->
+    {% include frmLogin.html %}
+    {% include frmRegister.html %}
+    {% include frmProfile.html %}
+    {% include frmChangePassword.html %}
+    {% comment %}
+    {% include frmForgotPassword.html %}
+    {% include frmChangeEmail.html %}
+    {% endcomment %}
     <!-- LOGOUT -->
     <form id="frmLogout" role="form">
-         <h2>You are logged out!</h2>
+        <h2>You are logged out!</h2>
     </form>
     <!-- / LOGOUT -->
-    <!-- REGISTER -->
-    {% include registerForm.html %}
-    <!-- / REGISTER -->
-    <!-- PROFILE -->
-    {% include profileForm.html %}
-    <!-- / PROFILE -->
 </div>
