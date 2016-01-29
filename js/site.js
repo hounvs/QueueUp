@@ -199,9 +199,17 @@ function bench(event) {
     }
 }
 
-// Link navigation tabs to each other
+// Link navigation tabs to each other and add swipe support
 (function(jQuery) {
     window.onload = function() {
         $('.nav-pills a').click(this, function(e) {$('a[href=#' + $(this).attr("aria-controls") + ']').tab('show')});
+        
+        var hammertime = new Hammer(document);
+        hammertime.on('swiperight', function(ev) {
+            $('a[href=#queue]').tab('show');
+        });
+        hammertime.on('swipeleft', function(ev) {
+            $('a[href=#bench]').tab('show');
+        });
     }
 }(window.jQuery));
