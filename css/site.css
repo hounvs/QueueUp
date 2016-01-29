@@ -16,10 +16,6 @@ form {
     fill: #222222;
 }
 
-.nav-pills.tabpanel>li>a {
-    border-radius: 0;
-}
-
 .panel.tabpanel {
     border: 0;
     border-bottom: 1px solid transparent;
@@ -31,10 +27,19 @@ form {
     border-top-left-radius: 0;
 }
 
+.nav-justified.tabpanel>li {
+    display: table-cell;
+    width: 1%;
+}
+
 .nav-justified.tabpanel>li>a {
     margin-bottom: 0;
 }
 
 .nav-pills>li+li {
     margin-left: 0;
+}
+
+.nav-pills.tabpanel>li>a {
+    border-radius: 0;
 }
