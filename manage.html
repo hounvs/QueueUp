@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Profile
+title: Manage
 ---
 
 <script src="{{ site.baseurl }}/js/userAuth.js"></script>
@@ -12,9 +12,7 @@ title: Profile
         <p id="alert-detail"></p>
     </div>
     <!-- / ALERT BOX -->
-    {% include frmLogin.html %}
-    {% include frmRegister.html %}
-    {% include frmProfile.html %}
-    {% include frmLogout.html %}
     {% include frmChangePassword.html %}
+    {% include frmForgotPassword.html %}
+    {% include frmChangeEmail.html %}
 </div>
