@@ -21,23 +21,19 @@ function addQueueRow(playerName, playerWins, playerLosses) {
 
     var moveCell = newRow.insertCell(0);
     moveCell.innerHTML = "<input type='button' class='btn btn-primary' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
-    moveCell.id = "name-" + playerName;
-
+    
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
     nameCell.id = "name-" + playerName;
 
     var winsCell = newRow.insertCell(2);
-    winsCell.innerHTML = "<input type='number' id='wins-" + playerName + "-number' class='form-control' value='" + playerWins + "' style='width:100px;' />";
-    winsCell.id = "wins-" + playerName;
+    winsCell.innerHTML = "<input type='number' id='wins' class='form-control' value='" + playerWins + "' style='width:100px;' />";
 
     var lossesCell = newRow.insertCell(3);
-    lossesCell.innerHTML = "<input type='number' id='losses-" + playerName + "-number' class='form-control' value='" + playerLosses + "' style='width:100px;' />";
-    lossesCell.id = "losses-" + playerName;
+    lossesCell.innerHTML = "<input type='number' id='losses' class='form-control' value='" + playerLosses + "' style='width:100px;' />";
 
     var streakCell = newRow.insertCell(4);
-    streakCell.innerHTML = "<input type='number' id='streak-" + playerName + "-number' class='form-control' value='0' style='width:100px;' />";
-    streakCell.id = "streak-" + playerName;
+    streakCell.innerHTML = "<input type='number' id='streak' class='form-control' value='0' style='width:100px;' />";
 }
 
 function addBenchRow(playerName, playerWins, playerLosses) {
@@ -46,23 +42,19 @@ function addBenchRow(playerName, playerWins, playerLosses) {
 
     var moveCell = newRow.insertCell(0);
     moveCell.innerHTML = "<input type='button' class='btn btn-primary' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
-    moveCell.id = "name-" + playerName;
 
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
     nameCell.id = "name-" + playerName;
 
     var winsCell = newRow.insertCell(2);
-    winsCell.innerHTML = "<p id='wins-" + playerName + "-number'>" + playerWins + "</p>";
-    winsCell.id = "wins-" + playerName;
+    winsCell.innerHTML = "<p id='wins'>" + playerWins + "</p>";
 
     var lossesCell = newRow.insertCell(3);
-    lossesCell.innerHTML = "<p id='losses-" + playerName + "-number'>" + playerLosses + "</p>";
-    lossesCell.id = "losses-" + playerName;
+    lossesCell.innerHTML = "<p id='losses'>" + playerLosses + "</p>";
 
     var removeCell = newRow.insertCell(4);
     removeCell.innerHTML = "<input type='button' id='remove-" + playerName + "-button' class='btn btn-danger' onclick='removeRow(this.parentElement.parentElement, &apos;bench-table&apos;)' value='Remove' />";
-    removeCell.id = "remove-" + playerName;
 }
 
 function removeRow(rowToDelete, tableChoice) {
@@ -80,7 +72,7 @@ function removeRow(rowToDelete, tableChoice) {
 }
 
 function updatePage() {
-	var playersInMatch = $("#players-in-match")[0].value;
+	var playersInMatch = $("#players-in-match").val();
 
 	var currentPlayers = $("#current-players")[0];
 	var skipPlayers = $("#skip-players")[0];
@@ -108,11 +100,11 @@ function updatePage() {
 		}
     }
 
-    $('#player')[0].value = "";
+    $('#player').val('');
 }
 
 function chooseWinner(winner) {
-    var playersInMatch = $("#players-in-match")[0].value;
+    var playersInMatch = $("#players-in-match").val();
     var winnerRow;
     var loserRows = [];
 
@@ -124,22 +116,32 @@ function chooseWinner(winner) {
             loserRows.push(currentRow);
         }
     }
-
-    var winsCell = winnerRow.children[2].children[0];
-    winsCell.value = +winsCell.value + 1;
-
-    var streakCell = winnerRow.children[4].children[0];
-    streakCell.value = +streakCell.value + 1;
+    
+    updateRecord(winnerRow, true);
 
     for (var i = 0; i < loserRows.length; i++) {
-        var lossesCell = loserRows[i].children[3].children[0];
-        lossesCell.value = +lossesCell.value + 1;
-
+        updateRecord(loserRows[i], false);
         moveRow(loserRows[i], "player-table", "player-table");
     }
 
-	if (streakCell.value >= 3) {
+	if (parseInt($(winnerRow).find("#streak").val(), 10) >= parseInt($('#maxStreak').val(), 10)) {
         moveRow(winnerRow, "player-table", "player-table");
+    }
+}
+
+// Update the wins, losses, and streak of that row
+function updateRecord(playerRow, won) {
+    if(won) {
+        $(playerRow).find("#wins").val(function(i, oldVal) {
+            return ++oldVal;
+        });
+        $(playerRow).find("#streak").val(function(i, oldVal) {
+            return ++oldVal;
+        });
+    } else {
+        $(playerRow).find("#losses").val(function(i, oldVal) {
+            return ++oldVal;
+        });
     }
 }
 
@@ -153,7 +155,7 @@ function moveRow(row, startingTable, endingTable) {
 }
 
 function exportStats() {
-	var dumpField = $("#data-dump")[0];
+	var dumpField = $("#data-dump");
 
 	var dataDump = "Player,Wins,Losses";
 
@@ -166,7 +168,7 @@ function exportStats() {
 
 		dataDump = dataDump + "\n" + playerName + "," + playerWins + "," + playerLosses;
 	}
-	dumpField.value = dataDump;
+	dumpField.val(dataDump);
 }
 
 function importStats(tableChoice) {
@@ -179,7 +181,7 @@ function importStats(tableChoice) {
 
 	var dumpField = $("#data-dump")[0];
 	var regex = /[\n,]+/;	//new line or comma
-	var dataDump = dumpField.value.split(regex);
+	var dataDump = dumpField.val().split(regex);
 
 	var columnCount = 3;
 
@@ -193,6 +195,13 @@ function importStats(tableChoice) {
 
 function bench(event) {
 	if (event.keyCode == 13) {
-        $("#bench").click();
+        $("#addToBench").click();
     }
 }
+
+// Link navigation tabs to each other
+(function(jQuery) {
+    window.onload = function() {
+        $('.nav-pills a').click(this, function(e) {$('a[href=#' + $(this).attr("aria-controls") + ']').tab('show')});
+    }
+}(window.jQuery));

@@ -135,13 +135,16 @@
     // changes the users password
     function changePassword(userObj) {
         var deferred = $.Deferred();
-        rootRef.changePassword(userObj, function(err) {
+        rootRef.changePassword(userObj, function onComplete(err) {
             if (err) {
-                if (!err) {
-                    deferred.resolve();
-                } else {
-                    deferred.reject(err);
-                }
+                deferred.reject(err);
+            } else {
+                deferred.resolve();
+                // show the message if write is successful
+                showAlert({
+                    title: 'Successfully saved!',
+                    className: 'alert-success'
+                });
             }
         });
         return deferred.promise();
