@@ -5,11 +5,8 @@ layout: default
 <div class="page-content">
     <div>
         <!-- Title and Player Buttons -->
-        <div style="height: 7em;">
+        <div>
             {% include currentPlayers.html %}
-        </div>
-        <div class="col-md-12">
-            {% include importExport.html %}
         </div>
         
         <!-- Nav tabs -->
@@ -29,6 +26,13 @@ layout: default
             <li role="presentation" class="active"><a href="#queue" aria-controls="queue" role="tabs" data-toggle="tab">Queue</a></li>
             <li role="presentation"><a href="#bench" aria-controls="bench" role="tabs" data-toggle="tab">Bench</a></li>
         </ul>
+        
+        <hr/>
+        
+        <!-- Import/export -->
+        <div class="col-md-12">
+            {% include importExport.html %}
+        </div>
     </div>
 </div>
 
