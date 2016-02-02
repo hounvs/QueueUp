@@ -12,10 +12,12 @@ form {
   height: 16px;
   vertical-align: middle;
 }
+
 .icon > svg path {
     fill: #222222;
 }
 
+/* Tabbed pannels */
 .panel.tabpanel {
     border: 0;
     border-bottom: 1px solid transparent;
@@ -25,6 +27,7 @@ form {
 .panel-heading.tabpanel  {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+    border: 0;
 }
 
 .nav-justified.tabpanel>li {
@@ -42,4 +45,21 @@ form {
 
 .nav-pills.tabpanel>li>a {
     border-radius: 0;
+}
+
+.nav-pills>li>a {
+    background-color: #eeeeee;
+}
+
+.nav-pills>li>a:hover {
+    background-color: #cccccc;
+}
+/* End tabbed panels */
+
+.condensed {
+    padding: 4px 6px;
+}
+
+.form-control.condensed {
+    height: 0%;
 }

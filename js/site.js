@@ -20,7 +20,7 @@ function addQueueRow(playerName, playerWins, playerLosses) {
     newRow.id = playerName;
 
     var moveCell = newRow.insertCell(0);
-    moveCell.innerHTML = "<input type='button' class='btn btn-primary' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
+    moveCell.innerHTML = "<input type='button' class='btn btn-info' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
     
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
@@ -41,7 +41,7 @@ function addBenchRow(playerName, playerWins, playerLosses) {
     newRow.id = playerName;
 
     var moveCell = newRow.insertCell(0);
-    moveCell.innerHTML = "<input type='button' class='btn btn-primary' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
+    moveCell.innerHTML = "<input type='button' class='btn btn-info' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
 
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
@@ -77,27 +77,23 @@ function updatePage() {
 	var currentPlayers = $("#current-players")[0];
 	var skipPlayers = $("#skip-players")[0];
 
-	currentPlayers.innerHTML = "<div class='alert alert-danger' style='padding-bottom:'>Not enough players in queue</div>";
-	skipPlayers.innerHTML = "";
 
     if (playerTable.rows.length >= playersInMatch) {
 		currentPlayers.innerHTML = "";
 		skipPlayers.innerHTML = "";
 
 		for(var i=0; i<playersInMatch; i++) {
-			if(i != 0) {
-				currentPlayers.innerHTML = currentPlayers.innerHTML
-										 + "<span> vs. </span>";
-			}
 
 			currentPlayers.innerHTML = currentPlayers.innerHTML
-									 + "<a onclick='chooseWinner(this)' id='" + i + "' class='btn btn-primary btn-lg'>" + playerTable.rows[i].id + "</a>";
+									 + "<a onclick='chooseWinner(this)' id='" + i + "' class='btn btn-info btn-lg'>" + playerTable.rows[i].id + "</a>";
 
 			skipPlayers.innerHTML = skipPlayers.innerHTML
-								  + "<a onclick='moveRow(playerTable.rows[this.id], &apos;player-table&apos;, &apos;player-table&apos;);' id='" + i + "' class='btn btn-danger btn-xs'>Skip "
-								  + playerTable.rows[i].id + "</a>"
-								  + "<span> </span>";
+                                  + "<a onclick='moveRow(playerTable.rows[this.id], &apos;player-table&apos;, &apos;player-table&apos;);' id='" + i + "' class='btn btn-danger btn-sm'>Skip "
+								  + playerTable.rows[i].id + "</a>";
 		}
+    } else{
+        currentPlayers.innerHTML = "<div class='alert alert-danger' style='text-align:center;'>Not enough players in queue</div>";
+        skipPlayers.innerHTML = "";
     }
 
     $('#player').val('');
