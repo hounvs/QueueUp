@@ -20,20 +20,20 @@ function addQueueRow(playerName, playerWins, playerLosses) {
     newRow.id = playerName;
 
     var moveCell = newRow.insertCell(0);
-    moveCell.innerHTML = "<input type='button' class='btn btn-info' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
+    moveCell.innerHTML = "<input type='button' class='btn btn-info btn-sm' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
     
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
     nameCell.id = "name-" + playerName;
 
     var winsCell = newRow.insertCell(2);
-    winsCell.innerHTML = "<input type='number' id='wins' class='form-control' value='" + playerWins + "' style='width:100px;' />";
+    winsCell.innerHTML = "<input type='number' id='wins' class='form-control' value='" + playerWins + "' />";
 
     var lossesCell = newRow.insertCell(3);
-    lossesCell.innerHTML = "<input type='number' id='losses' class='form-control' value='" + playerLosses + "' style='width:100px;' />";
+    lossesCell.innerHTML = "<input type='number' id='losses' class='form-control' value='" + playerLosses + "' />";
 
     var streakCell = newRow.insertCell(4);
-    streakCell.innerHTML = "<input type='number' id='streak' class='form-control' value='0' style='width:100px;' />";
+    streakCell.innerHTML = "<input type='number' id='streak' class='form-control' value='0' />";
 }
 
 function addBenchRow(playerName, playerWins, playerLosses) {
@@ -41,7 +41,7 @@ function addBenchRow(playerName, playerWins, playerLosses) {
     newRow.id = playerName;
 
     var moveCell = newRow.insertCell(0);
-    moveCell.innerHTML = "<input type='button' class='btn btn-info' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
+    moveCell.innerHTML = "<input type='button' class='btn btn-info btn-sm' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
 
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
@@ -54,7 +54,7 @@ function addBenchRow(playerName, playerWins, playerLosses) {
     lossesCell.innerHTML = "<p id='losses'>" + playerLosses + "</p>";
 
     var removeCell = newRow.insertCell(4);
-    removeCell.innerHTML = "<input type='button' id='remove-" + playerName + "-button' class='btn btn-danger' onclick='removeRow(this.parentElement.parentElement, &apos;bench-table&apos;)' value='Remove' />";
+    removeCell.innerHTML = "<input type='button' id='remove-" + playerName + "-button' class='btn btn-danger btn-sm' onclick='removeRow(this.parentElement.parentElement, &apos;bench-table&apos;)' value='Remove' />";
 }
 
 function removeRow(rowToDelete, tableChoice) {
