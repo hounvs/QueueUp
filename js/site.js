@@ -202,10 +202,14 @@ function bench(event) {
         
         var hammertime = new Hammer(document);
         hammertime.on('swiperight', function(ev) {
-            $('a[href=#queue]').tab('show');
+            if(ev.pointerType == "touch") {
+                $('a[href=#queue]').tab('show');
+            }
         });
         hammertime.on('swipeleft', function(ev) {
-            $('a[href=#bench]').tab('show');
+            if(ev.pointerType == "touch") {
+                $('a[href=#bench]').tab('show');
+            }
         });
     }
 }(window.jQuery));
