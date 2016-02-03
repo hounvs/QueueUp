@@ -1,0 +1,20 @@
+---
+layout: default
+title: Profile
+---
+
+<script src="{{ site.baseurl }}/js/userAuth.js"></script>
+
+<div id="container" class="container">
+    <!-- ALERT BOX -->
+    <div id="alert" class="alert hidden" role="alert">
+        <h4 id="alert-title"></h4>
+        <p id="alert-detail"></p>
+    </div>
+    <!-- / ALERT BOX -->
+    {% include frmLogin.html %}
+    {% include frmRegister.html %}
+    {% include frmProfile.html %}
+    {% include frmLogout.html %}
+    {% include frmChangePassword.html %}
+</div>

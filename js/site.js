@@ -20,24 +20,20 @@ function addQueueRow(playerName, playerWins, playerLosses) {
     newRow.id = playerName;
 
     var moveCell = newRow.insertCell(0);
-    moveCell.innerHTML = "<input type='button' class='btn btn-primary' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
-    moveCell.id = "name-" + playerName;
-
+    moveCell.innerHTML = "<input type='button' class='btn btn-info btn-sm' value='Bench' onclick='moveRow(this.parentElement.parentElement, &apos;player-table&apos;, &apos;bench-table&apos;)' />";
+    
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
     nameCell.id = "name-" + playerName;
 
     var winsCell = newRow.insertCell(2);
-    winsCell.innerHTML = "<input type='number' id='wins-" + playerName + "-number' class='form-control' value='" + playerWins + "' style='width:100px;' />";
-    winsCell.id = "wins-" + playerName;
+    winsCell.innerHTML = "<input type='number' id='wins' class='form-control' value='" + playerWins + "' />";
 
     var lossesCell = newRow.insertCell(3);
-    lossesCell.innerHTML = "<input type='number' id='losses-" + playerName + "-number' class='form-control' value='" + playerLosses + "' style='width:100px;' />";
-    lossesCell.id = "losses-" + playerName;
+    lossesCell.innerHTML = "<input type='number' id='losses' class='form-control' value='" + playerLosses + "' />";
 
     var streakCell = newRow.insertCell(4);
-    streakCell.innerHTML = "<input type='number' id='streak-" + playerName + "-number' class='form-control' value='0' style='width:100px;' />";
-    streakCell.id = "streak-" + playerName;
+    streakCell.innerHTML = "<input type='number' id='streak' class='form-control' value='0' />";
 }
 
 function addBenchRow(playerName, playerWins, playerLosses) {
@@ -45,24 +41,20 @@ function addBenchRow(playerName, playerWins, playerLosses) {
     newRow.id = playerName;
 
     var moveCell = newRow.insertCell(0);
-    moveCell.innerHTML = "<input type='button' class='btn btn-primary' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
-    moveCell.id = "name-" + playerName;
+    moveCell.innerHTML = "<input type='button' class='btn btn-info btn-sm' value='Queue up!' onclick='moveRow(this.parentElement.parentElement, &apos;bench-table&apos;, &apos;player-table&apos;)' />";
 
     var nameCell = newRow.insertCell(1);
     nameCell.innerHTML = playerName;
     nameCell.id = "name-" + playerName;
 
     var winsCell = newRow.insertCell(2);
-    winsCell.innerHTML = "<p id='wins-" + playerName + "-number'>" + playerWins + "</p>";
-    winsCell.id = "wins-" + playerName;
+    winsCell.innerHTML = "<p id='wins'>" + playerWins + "</p>";
 
     var lossesCell = newRow.insertCell(3);
-    lossesCell.innerHTML = "<p id='losses-" + playerName + "-number'>" + playerLosses + "</p>";
-    lossesCell.id = "losses-" + playerName;
+    lossesCell.innerHTML = "<p id='losses'>" + playerLosses + "</p>";
 
     var removeCell = newRow.insertCell(4);
-    removeCell.innerHTML = "<input type='button' id='remove-" + playerName + "-button' class='btn btn-danger' onclick='removeRow(this.parentElement.parentElement, &apos;bench-table&apos;)' value='Remove' />";
-    removeCell.id = "remove-" + playerName;
+    removeCell.innerHTML = "<input type='button' id='remove-" + playerName + "-button' class='btn btn-danger btn-sm' onclick='removeRow(this.parentElement.parentElement, &apos;bench-table&apos;)' value='Remove' />";
 }
 
 function removeRow(rowToDelete, tableChoice) {
@@ -80,39 +72,35 @@ function removeRow(rowToDelete, tableChoice) {
 }
 
 function updatePage() {
-	var playersInMatch = $("#players-in-match")[0].value;
+	var playersInMatch = $("#players-in-match").val();
 
 	var currentPlayers = $("#current-players")[0];
 	var skipPlayers = $("#skip-players")[0];
 
-	currentPlayers.innerHTML = "<div class='alert alert-danger' style='padding-bottom:'>Not enough players in queue</div>";
-	skipPlayers.innerHTML = "";
 
     if (playerTable.rows.length >= playersInMatch) {
 		currentPlayers.innerHTML = "";
 		skipPlayers.innerHTML = "";
 
 		for(var i=0; i<playersInMatch; i++) {
-			if(i != 0) {
-				currentPlayers.innerHTML = currentPlayers.innerHTML
-										 + "<span> vs. </span>";
-			}
 
 			currentPlayers.innerHTML = currentPlayers.innerHTML
-									 + "<a onclick='chooseWinner(this)' id='" + i + "' class='btn btn-primary btn-lg'>" + playerTable.rows[i].id + "</a>";
+									 + "<a onclick='chooseWinner(this)' id='" + i + "' class='btn btn-info btn-lg'>" + playerTable.rows[i].id + "</a>";
 
 			skipPlayers.innerHTML = skipPlayers.innerHTML
-								  + "<a onclick='moveRow(playerTable.rows[this.id], &apos;player-table&apos;, &apos;player-table&apos;);' id='" + i + "' class='btn btn-danger btn-xs'>Skip "
-								  + playerTable.rows[i].id + "</a>"
-								  + "<span> </span>";
+                                  + "<a onclick='moveRow(playerTable.rows[this.id], &apos;player-table&apos;, &apos;player-table&apos;);' id='" + i + "' class='btn btn-danger btn-sm'>Skip "
+								  + playerTable.rows[i].id + "</a>";
 		}
+    } else{
+        currentPlayers.innerHTML = "<div class='alert alert-danger' style='text-align:center;'>Not enough players in queue</div>";
+        skipPlayers.innerHTML = "";
     }
 
-    $('#player')[0].value = "";
+    $('#player').val('');
 }
 
 function chooseWinner(winner) {
-    var playersInMatch = $("#players-in-match")[0].value;
+    var playersInMatch = $("#players-in-match").val();
     var winnerRow;
     var loserRows = [];
 
@@ -124,22 +112,32 @@ function chooseWinner(winner) {
             loserRows.push(currentRow);
         }
     }
-
-    var winsCell = winnerRow.children[2].children[0];
-    winsCell.value = +winsCell.value + 1;
-
-    var streakCell = winnerRow.children[4].children[0];
-    streakCell.value = +streakCell.value + 1;
+    
+    updateRecord(winnerRow, true);
 
     for (var i = 0; i < loserRows.length; i++) {
-        var lossesCell = loserRows[i].children[3].children[0];
-        lossesCell.value = +lossesCell.value + 1;
-
+        updateRecord(loserRows[i], false);
         moveRow(loserRows[i], "player-table", "player-table");
     }
 
-	if (streakCell.value >= 3) {
+	if (parseInt($(winnerRow).find("#streak").val(), 10) >= parseInt($('#maxStreak').val(), 10)) {
         moveRow(winnerRow, "player-table", "player-table");
+    }
+}
+
+// Update the wins, losses, and streak of that row
+function updateRecord(playerRow, won) {
+    if(won) {
+        $(playerRow).find("#wins").val(function(i, oldVal) {
+            return ++oldVal;
+        });
+        $(playerRow).find("#streak").val(function(i, oldVal) {
+            return ++oldVal;
+        });
+    } else {
+        $(playerRow).find("#losses").val(function(i, oldVal) {
+            return ++oldVal;
+        });
     }
 }
 
@@ -153,7 +151,7 @@ function moveRow(row, startingTable, endingTable) {
 }
 
 function exportStats() {
-	var dumpField = $("#data-dump")[0];
+	var dumpField = $("#data-dump");
 
 	var dataDump = "Player,Wins,Losses";
 
@@ -166,7 +164,7 @@ function exportStats() {
 
 		dataDump = dataDump + "\n" + playerName + "," + playerWins + "," + playerLosses;
 	}
-	dumpField.value = dataDump;
+	dumpField.val(dataDump);
 }
 
 function importStats(tableChoice) {
@@ -179,7 +177,7 @@ function importStats(tableChoice) {
 
 	var dumpField = $("#data-dump")[0];
 	var regex = /[\n,]+/;	//new line or comma
-	var dataDump = dumpField.value.split(regex);
+	var dataDump = dumpField.val().split(regex);
 
 	var columnCount = 3;
 
@@ -193,6 +191,21 @@ function importStats(tableChoice) {
 
 function bench(event) {
 	if (event.keyCode == 13) {
-        $("#bench").click();
+        $("#addToBench").click();
     }
 }
+
+// Link navigation tabs to each other and add swipe support
+(function(jQuery) {
+    window.onload = function() {
+        $('.nav-pills a').click(this, function(e) {$('a[href=#' + $(this).attr("aria-controls") + ']').tab('show')});
+        
+        var hammertime = new Hammer(document);
+        hammertime.on('swiperight', function(ev) {
+            $('a[href=#queue]').tab('show');
+        });
+        hammertime.on('swipeleft', function(ev) {
+            $('a[href=#bench]').tab('show');
+        });
+    }
+}(window.jQuery));

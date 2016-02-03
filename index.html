@@ -1,23 +1,37 @@
 ---
-logo: SSB4.png
+layout: default
 ---
-
-{% include header.html %}
 
 <div class="page-content">
     <div>
         <!-- Title and Player Buttons -->
-        <div style="height: 7em;">
+        <div>
             {% include currentPlayers.html %}
         </div>
+        
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills nav-justified tabpanel" role="tablist">
+            <li role="presentation" class="active"><a href="#queue" aria-controls="queue" role="tabs" data-toggle="tab">Queue</a></li>
+            <li role="presentation"><a href="#bench" aria-controls="bench" role="tabs" data-toggle="tab">Bench</a></li>
+        </ul>
+          
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="queue">{% include queueTable.html %}</div>
+            <div role="tabpanel" class="tab-pane" id="bench">{% include benchTable.html %}</div>
+        </div>
+        
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills nav-justified tabpanel" role="tablist">
+            <li role="presentation" class="active"><a href="#queue" aria-controls="queue" role="tabs" data-toggle="tab">Queue</a></li>
+            <li role="presentation"><a href="#bench" aria-controls="bench" role="tabs" data-toggle="tab">Bench</a></li>
+        </ul>
+        
+        <hr/>
+        
+        <!-- Import/export -->
         <div class="col-md-12">
             {% include importExport.html %}
-        </div>
-        <div class="col-md-6">
-            {% include queueTable.html %}
-        </div>
-        <div class="col-md-6">
-            {% include benchTable.html %}
         </div>
     </div>
 </div>
@@ -27,5 +41,3 @@ logo: SSB4.png
     benchTable = $("#bench-table")[0];
 	updatePage();
 </script>
-
-{% include footer.html %}

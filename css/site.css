@@ -1,3 +1,65 @@
 img.navbar-brand {
     padding: 0;
 }
+
+form {
+    display: none;
+}
+
+.icon > svg {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.icon > svg path {
+    fill: #222222;
+}
+
+/* Tabbed pannels */
+.panel.tabpanel {
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+}
+
+.panel-heading.tabpanel  {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border: 0;
+}
+
+.nav-justified.tabpanel>li {
+    display: table-cell;
+    width: 1%;
+}
+
+.nav-justified.tabpanel>li>a {
+    margin-bottom: 0;
+}
+
+.nav-pills>li+li {
+    margin-left: 0;
+}
+
+.nav-pills.tabpanel>li>a {
+    border-radius: 0;
+}
+
+.nav-pills>li>a {
+    background-color: #eeeeee;
+}
+
+.nav-pills>li>a:hover {
+    background-color: #cccccc;
+}
+/* End tabbed panels */
+
+.condensed {
+    padding: 4px 6px;
+}
+
+.form-control.condensed {
+    height: 0%;
+}

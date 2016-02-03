@@ -1,0 +1,28 @@
+<form id="frmProfile" role="form">
+    <div>
+    </div>
+    <div class="btn-group btn-group-justified">
+        <a class="btn btn-info" href="#/changeEmail">Change Email</a>
+        <a class="btn btn-info" href="#/changePassword">Change Password</a>
+        <a class="btn btn-info" href="#/logout">Logout</a>
+    </div>
+    
+    <hr/>
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Profile</h2>
+        </div>
+        <div class="panel-body">
+            <img id="gravatar" src="" alt="gravatar" height="80px" width="80" />
+            <span class="well well-sm">
+                Snagged from <a href="http://www.gravatar.com">Gravatar</a>
+            </span>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Name" name="name" autocomplete="off" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Update</button>
+        </div>
+    </div>
+</form>

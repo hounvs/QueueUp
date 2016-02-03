@@ -1,19 +1,30 @@
-<h3>
-    Queue
-    <span class="input-group">
-        <span class="input-group-addon">Players this match</span>
-        <input type="number" id="players-in-match" class="form-control" value="2" min="2" onchange="updatePage()" />
-    </span>
-</h3>
-<table class="table table-striped table-bordered table-hover table-condensed">
-    <thead>
-        <tr>
-            <th class="sorttable_nosort"></th>
-            <th>Player</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>Streak</th>
-        </tr>
-    </thead>
-    <tbody id="player-table"></tbody>
-</table>
+<div class="panel panel-primary tabpanel">
+    <div class="panel-heading tabpanel condensed">
+        <div class="container-fluid">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                <span class="input-group">
+                    <span class="input-group-addon condensed">Players</span>
+                    <input type="number" id="players-in-match" class="form-control condensed" value="2" min="2" onchange="updatePage()" />
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                <span class="input-group">
+                    <span class="input-group-addon condensed">Streak</span>
+                    <input type="number" id="maxStreak" class="form-control condensed" value="3" min="1" onchange="updatePage()" />
+                </span>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th class="sorttable_nosort"></th>
+                <th>Player</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Streak</th>
+            </tr>
+        </thead>
+        <tbody id="player-table"></tbody>
+    </table>
+</div>
