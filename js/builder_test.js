@@ -31,7 +31,7 @@ function createBuilderAndConnect() {
     builder.createTable('matchTransFact').
         addColumn('matchId', lf.Type.INT).
         addColumn('recordedById', lf.Type.INT). //ID of who added entry
-        addColumn('lobbyId', lf.Type.INT). //ID of the lobby
+        addColumn('lobbyId', lf.Type.STRING). //ID of the lobby
         addColumn('playerOneId', lf.Type.INT).  // foreign key to player.id
         addColumn('playerTwoId', lf.Type.INT).  // foreign key to player.id
         addColumn('date', lf.Type.DATE_TIME).
