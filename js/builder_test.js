@@ -15,22 +15,28 @@
  * limitations under the License.
  */
 
+// https://github.com/google/lovefield/blob/master/docs/spec/01_schema.md#131-columns
+// https://github.com/google/lovefield/blob/master/docs/spec/04_query.md
+// https://github.com/google/lovefield/blob/master/docs/dd/02_data_store.md#241-storage-format
+
 /** @return {!lf.schema.Builder} */
 function createBuilderAndConnect() {
     var builder = lf.schema.create('scrum', 1);
-    builder.createTable('person').
-        addColumn('id', lf.Type.STRING).
-        addColumn('lastName', lf.Type.STRING).
-        addColumn('firstName', lf.Type.STRING).
-        addPrimaryKey(['id']);
-    builder.createTable('task').
-        addColumn('id', lf.Type.STRING).
-        addColumn('desc', lf.Type.STRING).
-        addColumn('pri', lf.Type.INTEGER).
-        addColumn('owner', lf.Type.STRING).
-        addColumn('state', lf.Type.STRING).
-        addColumn('eta', lf.Type.DATE_TIME).
-        addPrimaryKey(['id']);
+    builder.createTable('player').
+        addColumn('playerId', lf.Type.INT).
+        addColumn('name', lf.Type.STRING).
+        addColumn('wins', lf.Type.INT).
+        addColumn('losses', lf.Type.INT).
+        addPrimaryKey(['playerId']);
+    builder.createTable('matchTransFact').
+        addColumn('matchId', lf.Type.INT).
+        addColumn('playerOneId', lf.Type.INT).  // foreign key to player.id
+        addColumn('playerTwoId', lf.Type.INT).  // foreign key to player.id
+        addColumn('date', lf.Type.DATE_TIME).
+        addColumn('playerOneVictory', lf.Type.INT). // 0 or 1 for summing
+        addColumn('playerOneWins', lf.Type.INT).
+        addColumn('playerOneLosses', lf.Type.INT).
+        addPrimaryKey(['matchId']);
   return builder.connect({
       storeType: lf.schema.DataStoreType.FIREBASE,
       firebase: rootRef
